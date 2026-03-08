@@ -1,0 +1,43 @@
+// Force dark theme on the GlobalFooter from @jetbrains/kotlin-web-site-ui.
+// The footer's ThemeProvider cannot propagate theme via React context because the pre-bundled
+// footer.js (esbuild CJS→ESM) embeds its own @rescui/ui-contexts copy with a separate ThemeContext.
+// These overrides replicate what the dark theme classes would apply.
+
+// stylelint-disable selector-class-pattern
+
+// Use CSS variable-based theming to match what the RESCUI dark theme applies
+[class*="ktl-footer-module_footer"] {
+  --rs-theme-dark: 1;
+}
+
+// Dark container background
+.ktl-footer-module_footer_3ENKj {
+  background: var(--ktl-dark-100, rgba(39, 40, 44, 1));
+  color: rgba(255, 255, 255, 0.75);
+
+  // Force all anchors to use light color (links, copyright, motto)
+  a {
+    color: rgba(255, 255, 255, 0.75);
+    border-color: rgba(255, 255, 255, 0.4);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+// Social icon items — apply dark item styles
+.ktl-social-item-module_social-item_LDEev {
+  color: rgba(255, 255, 255, 0.75);
+
+  &:hover,
+  &:focus {
+    color: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+// Nav item separators — dark version
+.ktl-nav-item-module_nav-item_526AM:not(:last-child)::after {
+  background-color: rgba(255, 255, 255, 0.5);
+}
